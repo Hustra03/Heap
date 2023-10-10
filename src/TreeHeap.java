@@ -43,32 +43,19 @@ public class TreeHeap {
 
     void addNode(int value) {
 
-        boolean leftIsSmaller = false;
-        if (left.root.getSubTreeSize() <= right.root.getSubTreeSize()) {
-            leftIsSmaller = true;
-        }
-        if (value <= this.root.getValue()) {
-            TreeHeapNode newRoot = new TreeHeapNode(this.root.getSubTreeSize() + 1, value);
-            TreeHeap newTreeHeap = new TreeHeap(this.root);
-            this.root.setSubTreeSize(this.root.getSubTreeSize() - 2);
-            if (leftIsSmaller) {
-                newTreeHeap.left = left;
-                this.left = newTreeHeap;
-            } else {
-                newTreeHeap.right = right;
-                this.right = newTreeHeap;
+        TreeHeapNode newNode=new TreeHeapNode(0, value);
+        TreeHeap currentHeap = this;
+        
+        while (true) {
+
+            if (newNode.getValue()<currentHeap.root.getValue()) {
+                
             }
-        } else {
-            if (leftIsSmaller) {
-                addNodeRecursive(left, value);
-            } else {
-                addNodeRecursive(right, value);
+            boolean leftIsSmaller = false;
+            if (left.root.getSubTreeSize() <= right.root.getSubTreeSize()) {
+                leftIsSmaller = true;
             }
         }
-    }
-
-    void addNodeRecursive(TreeHeap previousHeap, int value) {
-
     }
 
     TreeHeapNode removeNode() {
