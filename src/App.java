@@ -9,6 +9,19 @@ public class App {
             heap.enqueue(i);
         }
         PrintTreeHeap(heap.root, 0);
+        heap.dequeue();
+        heap.dequeue();
+
+        heap.dequeue();
+
+        heap.dequeue();
+
+        heap.dequeue();
+        heap.dequeue();
+        heap.dequeue();
+        heap.dequeue();
+        heap.dequeue();
+        PrintTreeHeap(heap.root, 0);
 
     }
 
@@ -19,7 +32,7 @@ public class App {
 
                 System.out.print("  |");
             }
-            System.out.println("Current value :" + root.value);
+            System.out.println("Current value :" + root.value + "| Current Size: "+ root.subTreeSize);
             if (root.left != null) {
                 PrintTreeHeap(root.left, level + 1);
             }

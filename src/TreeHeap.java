@@ -21,10 +21,26 @@ public class TreeHeap {
     public int dequeue() {
 
         if (root==null) {
-            return null;
+            return -1;
         }
-
-        return this.root.getValue();
+        if (root.left==null||root.right==null) {
+            if (root.left==null) {
+                TreeHeapNode temp = root;
+                root=root.right;
+                return temp.getValue();
+            }
+            else
+            {
+                
+                TreeHeapNode temp = root;
+                root=root.left;
+                return temp.getValue();
+            }
+        }
+        else
+        {
+            return root.remove().value;
+        }
     }
 
 }
