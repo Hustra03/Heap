@@ -17,7 +17,7 @@ public class TreeHeapNode {
         if (currentNode.getValue() > value) {
             int temp = value;
             value = currentNode.getValue();
-            currentNode.setValue(temp);// Swaps values of newNode and currentHeap
+            currentNode.setValue(temp);
         }
         if (currentNode.right == null) {
             currentNode.right = new TreeHeapNode(subTreeSize, value);
@@ -38,7 +38,6 @@ public class TreeHeapNode {
                 }
             }
         }
-
     }
 
     public TreeHeapNode remove() {
