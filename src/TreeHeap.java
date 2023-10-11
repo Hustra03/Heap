@@ -19,7 +19,6 @@ public class TreeHeap {
     }
 
     public int dequeue() {
-
         if (root == null) {
             return -1;
         }
@@ -29,7 +28,6 @@ public class TreeHeap {
                 root = root.right;
                 return temp.getValue();
             } else {
-
                 TreeHeapNode temp = root;
                 root = root.left;
                 return temp.getValue();

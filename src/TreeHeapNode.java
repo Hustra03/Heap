@@ -62,35 +62,30 @@ public class TreeHeapNode {
     }
 
     public int incrementNode(int level) {
-
         TreeHeapNode currentNode = this;
 
         if (currentNode.left != currentNode.right) {
 
             if (currentNode.left != null) {
                 if (currentNode.left.getValue() < this.value && (currentNode.right == null
-                        || currentNode.right.getSubTreeSize() >= currentNode.left.getSubTreeSize())) {
+                        || 
+                    (currentNode.right.getSubTreeSize() >= currentNode.left.getSubTreeSize()))) {
                     level += 1;
                     int temp = currentNode.left.value;
                     currentNode.left.setValue(currentNode.getValue());
-                    currentNode.setValue(temp);// Swaps values of current Node and current Node left node
+                    currentNode.setValue(temp);
                     level = currentNode.left.incrementNode(level);
                 }
             } else {
-                if (currentNode.right.getValue() < this.value) {// We do not need the same additional conditions since
-                                                                // that
-                                                                // is to check if the other branch is smaller, if we
-                                                                // reach
-                                                                // here the other branch is null or is longer
+                if (currentNode.right.getValue() < this.value) {
                     level += 1;
                     int temp = currentNode.right.value;
                     currentNode.right.setValue(currentNode.getValue());
-                    currentNode.setValue(temp);// Swaps values of current Node and current Node left node
+                    currentNode.setValue(temp);
                     level = currentNode.right.incrementNode(level);
                 }
             }
         }
-
         return level;
     }
 
