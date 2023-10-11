@@ -3,8 +3,8 @@ import java.util.Random;
 public class App {
     public static void main(String[] args) throws Exception {
         // TreeHeapTest();
-        // ArrayHeapTest();
-        HeapBenchmark();
+        ArrayHeapTest();
+        //HeapBenchmark();
     }
 
     public static void HeapBenchmark() {
@@ -102,14 +102,7 @@ public class App {
 
         PrintArrayHeap(heap);
 
-        for (int i = 0; i < heap.heap.length; i++) {
-            if (heap.heap[0] != i) {
-                System.out.println("Wrong Answer got " + heap.heap[i] + "| Correct:" + i);
-            }
-            heap.sink();
-
-            PrintArrayHeap(heap);
-        }
+        heap.increment(2);
 
         PrintArrayHeap(heap);
     }

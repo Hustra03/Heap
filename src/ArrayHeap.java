@@ -14,7 +14,7 @@ public class ArrayHeap {
         int currentPosition = currentMaxIndex;
         heap[currentPosition] = value;
 
-        int previousPostion = (currentPosition - 2) / 2;
+        int previousPostion;
 
         if ((currentPosition % 2) == 0) {
             previousPostion = (currentPosition - 2) / 2;
@@ -63,28 +63,29 @@ public class ArrayHeap {
             }
 
             if (heap[currentPosition] > heap[nextPositionLeft] || heap[currentPosition] > heap[nextPositionRigth]) {
-                Swap = true;
+
                 if (heap[nextPositionLeft] <= heap[nextPositionRigth]) {
                     SwapWithLeft = true;
                 } else {
                     SwapWithLeft = false;
                 }
             }
-            if (Swap) {
-                if (SwapWithLeft) {
-                    int tempValue = heap[currentPosition];
-                    heap[currentPosition] = heap[nextPositionLeft];
-                    heap[nextPositionLeft] = tempValue;
+            else
+            {break;}
 
-                    currentPosition = nextPositionLeft;
+            if (SwapWithLeft) {
+                int tempValue = heap[currentPosition];
+                heap[currentPosition] = heap[nextPositionLeft];
+                heap[nextPositionLeft] = tempValue;
 
-                } else {
-                    int tempValue = heap[currentPosition];
-                    heap[currentPosition] = heap[nextPositionRigth];
-                    heap[nextPositionRigth] = tempValue;
+                currentPosition = nextPositionLeft;
 
-                    currentPosition = nextPositionRigth;
-                }
+            } else {
+                int tempValue = heap[currentPosition];
+                heap[currentPosition] = heap[nextPositionRigth];
+                heap[nextPositionRigth] = tempValue;
+
+                currentPosition = nextPositionRigth;
             }
 
             Swap = false;
@@ -101,9 +102,9 @@ public class ArrayHeap {
     }
 
     public void increment(int incrementAmount) {
-        heap[0] += incrementAmount;
+        int i = heap[0] + incrementAmount;
         this.sink();
-        currentMaxIndex += 1;
+        this.bubble(i);
     }
 
 }
