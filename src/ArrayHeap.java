@@ -34,14 +34,13 @@ public class ArrayHeap {
                 previousPostion = (currentPosition - 1) / 2;
             }
         }
-
         currentMaxIndex += 1;
     }
 
     public int sink() {
         int returnValue = heap[0];
-        if (currentMaxIndex==heap.length) {
-            currentMaxIndex-=1;
+        if (currentMaxIndex == heap.length) {
+            currentMaxIndex -= 1;
         }
 
         heap[0] = heap[currentMaxIndex];
@@ -51,6 +50,7 @@ public class ArrayHeap {
         int nextPositionLeft = (currentPosition) * 2 + 1;
         int nextPositionRigth = (currentPosition + 1) * 2;
 
+        boolean Swap = true;
         boolean SwapWithLeft = true;
 
         while (true) {
@@ -63,43 +63,47 @@ public class ArrayHeap {
             }
 
             if (heap[currentPosition] > heap[nextPositionLeft] || heap[currentPosition] > heap[nextPositionRigth]) {
+                Swap = true;
                 if (heap[nextPositionLeft] <= heap[nextPositionRigth]) {
                     SwapWithLeft = true;
                 } else {
                     SwapWithLeft = false;
                 }
-            } 
-
-            if (SwapWithLeft) {
-                int tempValue = heap[currentPosition];
-                heap[currentPosition] = heap[nextPositionLeft];
-                heap[nextPositionLeft] = tempValue;
-
-                currentPosition = nextPositionLeft;
-            } else {
-                int tempValue = heap[currentPosition];
-                heap[currentPosition] = heap[nextPositionRigth];
-                heap[nextPositionRigth] = tempValue;
-
-                currentPosition = nextPositionRigth;
             }
+            if (Swap) {
+                if (SwapWithLeft) {
+                    int tempValue = heap[currentPosition];
+                    heap[currentPosition] = heap[nextPositionLeft];
+                    heap[nextPositionLeft] = tempValue;
+
+                    currentPosition = nextPositionLeft;
+
+                } else {
+                    int tempValue = heap[currentPosition];
+                    heap[currentPosition] = heap[nextPositionRigth];
+                    heap[nextPositionRigth] = tempValue;
+
+                    currentPosition = nextPositionRigth;
+                }
+            }
+
+            Swap = false;
 
             nextPositionLeft = (currentPosition) * 2 + 1;
             nextPositionRigth = (currentPosition + 1) * 2;
 
         }
 
-        if (currentMaxIndex < heap.length-1) {
+        if (currentMaxIndex < heap.length - 1) {
             currentMaxIndex -= 1;
         }
         return returnValue;
     }
 
-    public void increment(int incrementAmount)
-    {
-        heap[0]+=incrementAmount;
+    public void increment(int incrementAmount) {
+        heap[0] += incrementAmount;
         this.sink();
-        currentMaxIndex+=1;
+        currentMaxIndex += 1;
     }
 
 }
