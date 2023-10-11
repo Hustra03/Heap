@@ -15,7 +15,7 @@ public class ArrayHeap {
         heap[currentPosition] = value;
 
         int previousPostion = (currentPosition - 2) / 2;
-        
+
         if ((currentPosition % 2) == 0) {
             previousPostion = (currentPosition - 2) / 2;
         } else {
@@ -40,7 +40,9 @@ public class ArrayHeap {
 
     public int sink() {
         int returnValue = heap[0];
-        currentMaxIndex -= 1;
+        if (currentMaxIndex==heap.length) {
+            currentMaxIndex-=1;
+        }
 
         heap[0] = heap[currentMaxIndex];
 
@@ -87,7 +89,17 @@ public class ArrayHeap {
 
         }
 
+        if (currentMaxIndex < heap.length-1) {
+            currentMaxIndex -= 1;
+        }
         return returnValue;
+    }
+
+    public void increment(int incrementAmount)
+    {
+        heap[0]+=incrementAmount;
+        this.sink();
+        currentMaxIndex+=1;
     }
 
 }
