@@ -20,27 +20,34 @@ public class TreeHeap {
 
     public int dequeue() {
 
-        if (root==null) {
+        if (root == null) {
             return -1;
         }
-        if (root.left==null||root.right==null) {
-            if (root.left==null) {
+        if (root.left == null || root.right == null) {
+            if (root.left == null) {
                 TreeHeapNode temp = root;
-                root=root.right;
+                root = root.right;
+                return temp.getValue();
+            } else {
+
+                TreeHeapNode temp = root;
+                root = root.left;
                 return temp.getValue();
             }
-            else
-            {
-                
-                TreeHeapNode temp = root;
-                root=root.left;
-                return temp.getValue();
-            }
-        }
-        else
-        {
+        } else {
             return root.remove().value;
         }
+    }
+
+    public int increment(int incrementAmount) {
+        int level = 0;
+
+        if (root != null) {
+            root.setValue(root.getValue() + incrementAmount);
+            level = root.incrementNode(level);
+        }
+
+        return level;
     }
 
 }
