@@ -66,7 +66,7 @@ public class ArrayHeap {
         int nextIndexLeft = (currentIndex) * 2 + 1;
         int nextIndexRight = (currentIndex) * 2 + 2;
 
-        if (currentIndex < heap.length && nextIndexLeft < heap.length && nextIndexRight < heap.length) {
+        if (nextIndexLeft < heap.length && nextIndexRight < heap.length) {
 
             if (heap[currentIndex] > heap[nextIndexLeft] || heap[currentIndex] > heap[nextIndexRight]) {
                 if (heap[nextIndexLeft] < heap[nextIndexRight]) {

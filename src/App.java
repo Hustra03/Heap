@@ -105,7 +105,7 @@ public class App {
         heap.increment(6);
 
         PrintArrayHeap(heap);
-        int sinkAmount = 15;
+        int sinkAmount = 12;
         int resultArray[] = new int[15];
         for (int i = 0; i < sinkAmount; i++) {
             resultArray[i] = heap.sink();
@@ -113,6 +113,7 @@ public class App {
         for (int i = 0; i < resultArray.length; i++) {
             System.out.println("Position :" + i + " Value: " + resultArray[i]);
         }
+        PrintArrayHeap(heap);
 
     }
 
