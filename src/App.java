@@ -107,6 +107,11 @@ public class App {
 
         PrintArrayHeap(heap);
         heap.sink();
+        heap.sink();
+        heap.sink();
+        heap.sink();
+        heap.sink();
+        heap.sink();
 
         PrintArrayHeap(heap);
     }

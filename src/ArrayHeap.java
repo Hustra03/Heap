@@ -34,15 +34,18 @@ public class ArrayHeap {
                 previousPostion = (currentPosition - 1) / 2;
             }
         }
-        currentMaxIndex += 1;
+        if (currentMaxIndex < heap.length) {
+
+            currentMaxIndex += 1;
+
+        }
+
     }
 
     public int sink() {
         int returnValue = heap[0];
-        if (currentMaxIndex == heap.length) {
-            currentMaxIndex -= 1;
-        }
 
+        currentMaxIndex -= 1;
         heap[0] = heap[currentMaxIndex];
 
         int currentPosition = 0;
@@ -50,7 +53,6 @@ public class ArrayHeap {
         int nextPositionLeft = (currentPosition) * 2 + 1;
         int nextPositionRight = (currentPosition) * 2 + 2;
 
-        boolean Swap = true;
         boolean SwapWithLeft = true;
 
         while (true) {
@@ -64,7 +66,7 @@ public class ArrayHeap {
 
             if (heap[currentPosition] > heap[nextPositionLeft] || heap[currentPosition] > heap[nextPositionRight]) {
 
-                if (heap[nextPositionLeft] <= heap[nextPositionRight]) {
+                if (heap[nextPositionLeft] < heap[nextPositionRight]) {
                     SwapWithLeft = true;
                 } else {
                     SwapWithLeft = false;
@@ -88,16 +90,11 @@ public class ArrayHeap {
                 currentPosition = nextPositionRight;
             }
 
-            Swap = false;
-
             nextPositionLeft = (currentPosition) * 2 + 1;
             nextPositionRight = (currentPosition) * 2 + 2;
 
         }
 
-        if (currentMaxIndex < heap.length - 1) {
-            currentMaxIndex -= 1;
-        }
         return returnValue;
     }
 
