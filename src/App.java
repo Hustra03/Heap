@@ -84,12 +84,13 @@ public class App {
     }
 
     public static void TreeHeapTest() {
+
         TreeHeap heap = new TreeHeap();
         for (int i = 0; i < 10; i++) {
             heap.enqueue(i);
         }
         PrintTreeHeap(heap.root, 0);
-        heap.increment(2);
+        heap.increment(0);
         PrintTreeHeap(heap.root, 0);
 
     }
@@ -102,7 +103,10 @@ public class App {
 
         PrintArrayHeap(heap);
 
-        heap.increment(2);
+        heap.increment(6);
+
+        PrintArrayHeap(heap);
+        heap.sink();
 
         PrintArrayHeap(heap);
     }
@@ -123,6 +127,12 @@ public class App {
 
             }
         }
+        
+        for (int i = heap.currentMaxIndex; i < array.length; i++) {
+            
+            System.out.println("Unfilled Positions: " + i + "| Value:" + array[i]);
+        }
+
         System.out.println("");
     }
 

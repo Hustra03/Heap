@@ -48,7 +48,7 @@ public class ArrayHeap {
         int currentPosition = 0;
 
         int nextPositionLeft = (currentPosition) * 2 + 1;
-        int nextPositionRigth = (currentPosition + 1) * 2;
+        int nextPositionRight = (currentPosition) * 2 + 2;
 
         boolean Swap = true;
         boolean SwapWithLeft = true;
@@ -58,20 +58,20 @@ public class ArrayHeap {
             if ((nextPositionLeft < 0) || (nextPositionLeft > heap.length)) {
                 break;
             }
-            if ((nextPositionRigth < 0) || (nextPositionRigth > heap.length)) {
+            if ((nextPositionRight < 0) || (nextPositionRight > heap.length)) {
                 break;
             }
 
-            if (heap[currentPosition] > heap[nextPositionLeft] || heap[currentPosition] > heap[nextPositionRigth]) {
+            if (heap[currentPosition] > heap[nextPositionLeft] || heap[currentPosition] > heap[nextPositionRight]) {
 
-                if (heap[nextPositionLeft] <= heap[nextPositionRigth]) {
+                if (heap[nextPositionLeft] <= heap[nextPositionRight]) {
                     SwapWithLeft = true;
                 } else {
                     SwapWithLeft = false;
                 }
+            } else {
+                break;
             }
-            else
-            {break;}
 
             if (SwapWithLeft) {
                 int tempValue = heap[currentPosition];
@@ -82,16 +82,16 @@ public class ArrayHeap {
 
             } else {
                 int tempValue = heap[currentPosition];
-                heap[currentPosition] = heap[nextPositionRigth];
-                heap[nextPositionRigth] = tempValue;
+                heap[currentPosition] = heap[nextPositionRight];
+                heap[nextPositionRight] = tempValue;
 
-                currentPosition = nextPositionRigth;
+                currentPosition = nextPositionRight;
             }
 
             Swap = false;
 
             nextPositionLeft = (currentPosition) * 2 + 1;
-            nextPositionRigth = (currentPosition + 1) * 2;
+            nextPositionRight = (currentPosition) * 2 + 2;
 
         }
 
@@ -102,9 +102,47 @@ public class ArrayHeap {
     }
 
     public void increment(int incrementAmount) {
-        int i = heap[0] + incrementAmount;
-        this.sink();
-        this.bubble(i);
+        heap[0] += incrementAmount;
+
+        int currentPosition = 0;
+        int nextPositionLeft = (currentPosition) * 2 + 1;
+        int nextPositionRight = (currentPosition) * 2 + 2;
+
+        while (true) {
+
+            if ((nextPositionLeft < 0) || (nextPositionLeft > heap.length)) {
+                break;
+            }
+            if ((nextPositionRight < 0) || (nextPositionRight > heap.length)) {
+                break;
+            }
+
+            if (heap[currentPosition] > heap[nextPositionLeft]) {
+
+                if (heap[nextPositionLeft] <= heap[nextPositionRight]) {
+
+                    int tempValue = heap[currentPosition];
+                    heap[currentPosition] = heap[nextPositionLeft];
+                    heap[nextPositionLeft] = tempValue;
+
+                    currentPosition = nextPositionLeft;
+                }
+            } else {
+                if (heap[currentPosition] > heap[nextPositionRight]) {
+
+                    int tempValue = heap[currentPosition];
+                    heap[currentPosition] = heap[nextPositionRight];
+                    heap[nextPositionRight] = tempValue;
+
+                    currentPosition = nextPositionRight;
+                } else {
+                    break;
+                }
+            }
+
+            nextPositionLeft = (currentPosition) * 2 + 1;
+            nextPositionRight = (currentPosition + 1) * 2;
+        }
     }
 
 }
