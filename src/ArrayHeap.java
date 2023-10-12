@@ -49,9 +49,9 @@ public class ArrayHeap {
             System.out.println("All Elements Sunk");
             return returnValue;
         }
-        currentMaxIndex -= 1;
-        heap[0] = heap[currentMaxIndex];
+        heap[0] = heap[currentMaxIndex-1];
         sinkElement(0);
+        currentMaxIndex -= 1;
 
         return returnValue;
     }
