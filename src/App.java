@@ -4,7 +4,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         // TreeHeapTest();
         ArrayHeapTest();
-        //HeapBenchmark();
+        // HeapBenchmark();
     }
 
     public static void HeapBenchmark() {
@@ -14,7 +14,6 @@ public class App {
         Long minimumIncrement = Long.MAX_VALUE;
 
         Long minimumDequeue = Long.MAX_VALUE;
-
 
         Long minimumArray = Long.MAX_VALUE;
 
@@ -106,21 +105,22 @@ public class App {
         heap.increment(6);
 
         PrintArrayHeap(heap);
-        heap.sink();
-        heap.sink();
-        heap.sink();
-        heap.sink();
-        heap.sink();
-        heap.sink();
+        int sinkAmount = 15;
+        int resultArray[] = new int[15];
+        for (int i = 0; i < sinkAmount; i++) {
+            resultArray[i] = heap.sink();
+        }
+        for (int i = 0; i < resultArray.length; i++) {
+            System.out.println("Position :" + i + " Value: " + resultArray[i]);
+        }
 
-        PrintArrayHeap(heap);
     }
 
     public static void PrintArrayHeap(ArrayHeap heap) {
         int array[] = heap.heap;
 
         int level = 0;
-        for (int i = 0; i < heap.currentMaxIndex; i++) {
+        for (int i = 0; i < heap.currentMaxIndex - 1; i++) {
             for (int j = 0; j < level - 1; j++) {
 
                 System.out.print("  |");
@@ -132,9 +132,9 @@ public class App {
 
             }
         }
-        
+
         for (int i = heap.currentMaxIndex; i < array.length; i++) {
-            
+
             System.out.println("Unfilled Positions: " + i + "| Value:" + array[i]);
         }
 

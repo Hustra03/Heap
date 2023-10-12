@@ -45,100 +45,44 @@ public class ArrayHeap {
     public int sink() {
         int returnValue = heap[0];
 
+        if (currentMaxIndex <= 0) {
+            System.out.println("All Elements Sunk");
+            return returnValue;
+        }
         currentMaxIndex -= 1;
         heap[0] = heap[currentMaxIndex];
-
-        int currentPosition = 0;
-
-        int nextPositionLeft = (currentPosition) * 2 + 1;
-        int nextPositionRight = (currentPosition) * 2 + 2;
-
-        boolean SwapWithLeft = true;
-
-        while (true) {
-
-            if ((nextPositionLeft < 0) || (nextPositionLeft > heap.length)) {
-                break;
-            }
-            if ((nextPositionRight < 0) || (nextPositionRight > heap.length)) {
-                break;
-            }
-
-            if (heap[currentPosition] > heap[nextPositionLeft] || heap[currentPosition] > heap[nextPositionRight]) {
-
-                if (heap[nextPositionLeft] < heap[nextPositionRight]) {
-                    SwapWithLeft = true;
-                } else {
-                    SwapWithLeft = false;
-                }
-            } else {
-                break;
-            }
-
-            if (SwapWithLeft) {
-                int tempValue = heap[currentPosition];
-                heap[currentPosition] = heap[nextPositionLeft];
-                heap[nextPositionLeft] = tempValue;
-
-                currentPosition = nextPositionLeft;
-
-            } else {
-                int tempValue = heap[currentPosition];
-                heap[currentPosition] = heap[nextPositionRight];
-                heap[nextPositionRight] = tempValue;
-
-                currentPosition = nextPositionRight;
-            }
-
-            nextPositionLeft = (currentPosition) * 2 + 1;
-            nextPositionRight = (currentPosition) * 2 + 2;
-
-        }
+        sinkElement(0);
 
         return returnValue;
     }
 
     public void increment(int incrementAmount) {
         heap[0] += incrementAmount;
+        sinkElement(0);
+    }
 
-        int currentPosition = 0;
-        int nextPositionLeft = (currentPosition) * 2 + 1;
-        int nextPositionRight = (currentPosition) * 2 + 2;
+    private void sinkElement(int currentIndex) {
 
-        while (true) {
+        int nextIndexLeft = (currentIndex) * 2 + 1;
+        int nextIndexRight = (currentIndex) * 2 + 2;
 
-            if ((nextPositionLeft < 0) || (nextPositionLeft > heap.length)) {
-                break;
-            }
-            if ((nextPositionRight < 0) || (nextPositionRight > heap.length)) {
-                break;
-            }
+        if (currentIndex < heap.length && nextIndexLeft < heap.length && nextIndexRight < heap.length) {
 
-            if (heap[currentPosition] > heap[nextPositionLeft]) {
-
-                if (heap[nextPositionLeft] <= heap[nextPositionRight]) {
-
-                    int tempValue = heap[currentPosition];
-                    heap[currentPosition] = heap[nextPositionLeft];
-                    heap[nextPositionLeft] = tempValue;
-
-                    currentPosition = nextPositionLeft;
-                }
-            } else {
-                if (heap[currentPosition] > heap[nextPositionRight]) {
-
-                    int tempValue = heap[currentPosition];
-                    heap[currentPosition] = heap[nextPositionRight];
-                    heap[nextPositionRight] = tempValue;
-
-                    currentPosition = nextPositionRight;
+            if (heap[currentIndex] > heap[nextIndexLeft] || heap[currentIndex] > heap[nextIndexRight]) {
+                if (heap[nextIndexLeft] < heap[nextIndexRight]) {
+                    int tempValue = heap[nextIndexLeft];
+                    heap[nextIndexLeft] = heap[currentIndex];
+                    heap[currentIndex] = tempValue;
+                    sinkElement(nextIndexLeft);
                 } else {
-                    break;
+                    if (heap[currentIndex] > heap[nextIndexRight]) {
+                        int tempValue = heap[nextIndexRight];
+                        heap[nextIndexRight] = heap[currentIndex];
+                        heap[currentIndex] = tempValue;
+                        sinkElement(nextIndexRight);
+                    }
                 }
             }
-
-            nextPositionLeft = (currentPosition) * 2 + 1;
-            nextPositionRight = (currentPosition + 1) * 2;
         }
     }
 
