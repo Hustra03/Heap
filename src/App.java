@@ -3,8 +3,8 @@ import java.util.Random;
 public class App {
     public static void main(String[] args) throws Exception {
         // TreeHeapTest();
-        ArrayHeapTest();
-        // HeapBenchmark();
+        //ArrayHeapTest();
+         HeapBenchmark();
     }
 
     public static void HeapBenchmark() {
@@ -102,18 +102,24 @@ public class App {
 
         PrintArrayHeap(heap);
 
-        heap.increment(6);
+        //heap.increment(6);
 
         PrintArrayHeap(heap);
-        int sinkAmount = 12;
+        int sinkAmount = 0;
         int resultArray[] = new int[15];
         for (int i = 0; i < sinkAmount; i++) {
             resultArray[i] = heap.sink();
         }
-        for (int i = 0; i < resultArray.length; i++) {
+        
+        heap.increment(5);
+
+        PrintArrayHeap(heap);
+        for (int i = 0; i < resultArray.length-heap.currentMaxIndex; i++) {
             System.out.println("Position :" + i + " Value: " + resultArray[i]);
         }
-        PrintArrayHeap(heap);
+        System.out.println(heap.currentMaxIndex);
+
+
 
     }
 
@@ -121,7 +127,7 @@ public class App {
         int array[] = heap.heap;
 
         int level = 0;
-        for (int i = 0; i < heap.currentMaxIndex - 1; i++) {
+        for (int i = 0; i < heap.currentMaxIndex; i++) {
             for (int j = 0; j < level - 1; j++) {
 
                 System.out.print("  |");
