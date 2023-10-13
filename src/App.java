@@ -15,21 +15,34 @@ public class App {
 
         Long minimumDequeue = Long.MAX_VALUE;
 
-        Long minimumArray = Long.MAX_VALUE;
+
+        Long minimumArrayDequeue = Long.MAX_VALUE;
+        Long minimumArrayIncrement = Long.MAX_VALUE;
+        int randomArrayLength=1023;
+
+        int randomStartingValue[] = new int[randomArrayLength];
+        int randomIncrementValue[]= new int[randomArrayLength];
 
         for (int h = 0; h < 100; h++) {
 
             TreeHeap heap1 = new TreeHeap();
             TreeHeap heap2 = new TreeHeap();
+            
+
+            for (int i = 0; i < randomArrayLength; i++) {
+                randomStartingValue[i]=rnd.nextInt(10000);
+                randomIncrementValue[i]=rnd.nextInt(10, 100);
+            }
+
             Long t0 = System.nanoTime();
 
-            for (int i = 0; i < 1023; i++) {
-                int randomInt = rnd.nextInt(10000);
+            for (int i = 0; i < randomArrayLength; i++) {
+                int randomInt = randomStartingValue[i];
                 heap1.enqueue(randomInt);
 
             }
-            for (int i = 0; i < 1023; i++) {
-                int randomInt = rnd.nextInt(10, 100);
+            for (int i = 0; i < randomArrayLength; i++) {
+                int randomInt =randomIncrementValue[i];
                 heap1.increment(randomInt);
             }
 
@@ -39,13 +52,13 @@ public class App {
             }
 
             t0 = System.nanoTime();
-            for (int i = 0; i < 1023; i++) {
-                int randomInt = rnd.nextInt(10000);
+            for (int i = 0; i < randomArrayLength; i++) {
+                int randomInt = randomStartingValue[i];
                 heap2.enqueue(randomInt);
 
             }
-            for (int i = 0; i < 1023; i++) {
-                int randomInt = rnd.nextInt(10, 100);
+            for (int i = 0; i < randomArrayLength; i++) {
+                int randomInt = randomIncrementValue[i];
                 int dequeuedInt = heap2.dequeue();
                 heap2.enqueue(dequeuedInt + randomInt);
             }
@@ -55,22 +68,41 @@ public class App {
                 minimumDequeue = (t1);
             }
 
-            ArrayHeap heap3 = new ArrayHeap(1023);
+            ArrayHeap heap3 = new ArrayHeap(randomArrayLength);
+
+            ArrayHeap heap4 = new ArrayHeap(randomArrayLength);
 
             t0 = System.nanoTime();
             for (int i = 0; i < 1023; i++) {
-                int randomInt = rnd.nextInt(10000);
+                int randomInt = randomStartingValue[i];
                 heap3.bubble(randomInt);
 
             }
             for (int i = 0; i < 1023; i++) {
-                int randomInt = rnd.nextInt(10, 100);
-                heap3.increment(randomInt);
+                int randomInt = randomIncrementValue[i];
+                int dequeuedInt = heap3.sink();
+                heap3.bubble(dequeuedInt+randomInt);
             }
             t1 = System.nanoTime() - t0;
 
-            if (minimumArray > (t1)) {
-                minimumArray = (t1);
+            if (minimumArrayDequeue > (t1)) {
+                minimumArrayDequeue = (t1);
+            }
+
+            t0 = System.nanoTime();
+            for (int i = 0; i < 1023; i++) {
+                int randomInt = randomStartingValue[i];
+                heap4.bubble(randomInt);
+
+            }
+            for (int i = 0; i < 1023; i++) {
+                int randomInt = randomIncrementValue[i];
+                heap4.increment(randomInt);
+            }
+            t1 = System.nanoTime() - t0;
+
+            if (minimumArrayIncrement > (t1)) {
+                minimumArrayIncrement = (t1);
             }
 
         }
@@ -79,7 +111,10 @@ public class App {
 
         System.out.println("Enqueue and Dequeue   :" + (minimumDequeue) + " ns");
 
-        System.out.println("Bubble and Increment  :" + (minimumArray) + " ns");
+
+        System.out.println("Bubble and Dequeue    :" + (minimumArrayIncrement) + " ns");
+
+        System.out.println("Bubble and Increment  :" + (minimumArrayDequeue) + " ns");
     }
 
     public static void TreeHeapTest() {
