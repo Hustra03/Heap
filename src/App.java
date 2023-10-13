@@ -4,8 +4,8 @@ public class App {
     public static void main(String[] args) throws Exception {
         // TreeHeapTest();
         // ArrayHeapTest();
-        HeapBenchmark();
-        // HeapIncrementDepthBenchmark();
+        //HeapBenchmark();
+         HeapIncrementDepthBenchmark();
     }
 
     public static void HeapBenchmark() {
@@ -128,7 +128,7 @@ public class App {
 
     public static void HeapIncrementDepthBenchmark() {
         Random rnd = new Random();
-        int randomArrayLength = 1023;
+        int randomArrayLength = 1000;
         int incrementTimes = 5000;
 
         TreeHeap heap1 = new TreeHeap();
