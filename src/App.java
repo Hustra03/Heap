@@ -3,8 +3,9 @@ import java.util.Random;
 public class App {
     public static void main(String[] args) throws Exception {
         // TreeHeapTest();
-        //ArrayHeapTest();
-         HeapBenchmark();
+        // ArrayHeapTest();
+        //HeapBenchmark();
+        //HeapIncrementDepthBenchmark();
     }
 
     public static void HeapBenchmark() {
@@ -15,23 +16,22 @@ public class App {
 
         Long minimumDequeue = Long.MAX_VALUE;
 
-
         Long minimumArrayDequeue = Long.MAX_VALUE;
         Long minimumArrayIncrement = Long.MAX_VALUE;
-        int randomArrayLength=1023;
+
+        int randomArrayLength = 1023;
 
         int randomStartingValue[] = new int[randomArrayLength];
-        int randomIncrementValue[]= new int[randomArrayLength];
+        int randomIncrementValue[] = new int[randomArrayLength];
 
         for (int h = 0; h < 100; h++) {
 
             TreeHeap heap1 = new TreeHeap();
             TreeHeap heap2 = new TreeHeap();
-            
 
             for (int i = 0; i < randomArrayLength; i++) {
-                randomStartingValue[i]=rnd.nextInt(10000);
-                randomIncrementValue[i]=rnd.nextInt(10, 100);
+                randomStartingValue[i] = rnd.nextInt(10000);
+                randomIncrementValue[i] = rnd.nextInt(10, 100);
             }
 
             Long t0 = System.nanoTime();
@@ -42,7 +42,7 @@ public class App {
 
             }
             for (int i = 0; i < randomArrayLength; i++) {
-                int randomInt =randomIncrementValue[i];
+                int randomInt = randomIncrementValue[i];
                 heap1.increment(randomInt);
             }
 
@@ -81,7 +81,7 @@ public class App {
             for (int i = 0; i < 1023; i++) {
                 int randomInt = randomIncrementValue[i];
                 int dequeuedInt = heap3.sink();
-                heap3.bubble(dequeuedInt+randomInt);
+                heap3.bubble(dequeuedInt + randomInt);
             }
             t1 = System.nanoTime() - t0;
 
@@ -111,10 +111,63 @@ public class App {
 
         System.out.println("Enqueue and Dequeue   :" + (minimumDequeue) + " ns");
 
-
         System.out.println("Bubble and Dequeue    :" + (minimumArrayIncrement) + " ns");
 
         System.out.println("Bubble and Increment  :" + (minimumArrayDequeue) + " ns");
+    }
+
+    public static void HeapIncrementDepthBenchmark() {
+        Random rnd = new Random();
+        int randomArrayLength = 1023;
+        TreeHeap heap1 = new TreeHeap();
+        ArrayHeap heap4 = new ArrayHeap(randomArrayLength);
+
+        int randomStartingValue[] = new int[randomArrayLength];
+        int randomIncrementValue[] = new int[randomArrayLength];
+
+        int binaryTreeDepth[]=new int[randomArrayLength];
+        int arrayDepth[]=new int[randomArrayLength];
+
+        for (int i = 0; i < randomArrayLength; i++) {
+            randomStartingValue[i] = rnd.nextInt(10000);
+            randomIncrementValue[i] = rnd.nextInt(10, 100);
+        }
+
+        for (int i = 0; i < randomArrayLength; i++) {
+            int randomInt = randomStartingValue[i];
+            heap1.enqueue(randomInt);
+
+        }
+        for (int i = 0; i < randomArrayLength; i++) {
+            int randomInt = randomIncrementValue[i];
+            binaryTreeDepth[i]=heap1.increment(randomInt);
+        }
+
+        for (int i = 0; i < 1023; i++) {
+            int randomInt = randomStartingValue[i];
+            heap4.bubble(randomInt);
+
+        }
+        for (int i = 0; i < 1023; i++) {
+            int randomInt = randomIncrementValue[i];
+            arrayDepth[i]=heap4.increment(randomInt);
+        }
+
+        System.out.print("Linked List : {");
+        for (int i = 0; i < arrayDepth.length; i++) {
+            System.out.print(binaryTreeDepth[i]+", ");
+        }
+
+        System.out.print("}");
+        System.out.println("");
+
+        System.out.print("Array : {");
+        for (int i = 0; i < arrayDepth.length; i++) {
+            System.out.print(arrayDepth[i]+", ");
+        }
+
+        System.out.print("}");
+        System.out.println("");
     }
 
     public static void TreeHeapTest() {
@@ -137,7 +190,7 @@ public class App {
 
         PrintArrayHeap(heap);
 
-        //heap.increment(6);
+        // heap.increment(6);
 
         PrintArrayHeap(heap);
         int sinkAmount = 0;
@@ -145,16 +198,14 @@ public class App {
         for (int i = 0; i < sinkAmount; i++) {
             resultArray[i] = heap.sink();
         }
-        
+
         heap.increment(5);
 
         PrintArrayHeap(heap);
-        for (int i = 0; i < resultArray.length-heap.currentMaxIndex; i++) {
+        for (int i = 0; i < resultArray.length - heap.currentMaxIndex; i++) {
             System.out.println("Position :" + i + " Value: " + resultArray[i]);
         }
         System.out.println(heap.currentMaxIndex);
-
-
 
     }
 

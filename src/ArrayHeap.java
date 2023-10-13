@@ -50,18 +50,19 @@ public class ArrayHeap {
             return returnValue;
         }
         heap[0] = heap[currentMaxIndex - 1];
-        sinkElement(0);
+        sinkElement(0,0);
         currentMaxIndex -= 1;
 
         return returnValue;
     }
 
-    public void increment(int incrementAmount) {
+    public int increment(int incrementAmount) {
         heap[0] += incrementAmount;
-        sinkElement(0);
+        int level = sinkElement(0,0);
+        return level;
     }
 
-    private void sinkElement(int currentIndex) {
+    private int sinkElement(int currentIndex, int level) {
 
         int nextIndexLeft = (currentIndex) * 2 + 1;
         int nextIndexRight = (currentIndex) * 2 + 2;
@@ -71,7 +72,7 @@ public class ArrayHeap {
                 int tempValue = heap[nextIndexLeft];
                 heap[nextIndexLeft] = heap[currentIndex];
                 heap[currentIndex] = tempValue;
-                sinkElement(nextIndexLeft);
+                level= sinkElement(nextIndexLeft,level+1);
             }
         }
 
@@ -80,10 +81,11 @@ public class ArrayHeap {
                 int tempValue = heap[nextIndexRight];
                 heap[nextIndexRight] = heap[currentIndex];
                 heap[currentIndex] = tempValue;
-                sinkElement(nextIndexRight);
+                level = sinkElement(nextIndexRight,level+1);
             
 
         }
+        return level;
 
     }
 }
