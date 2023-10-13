@@ -4,8 +4,8 @@ public class App {
     public static void main(String[] args) throws Exception {
         // TreeHeapTest();
         // ArrayHeapTest();
-        //HeapBenchmark();
-         HeapIncrementDepthBenchmark();
+        // HeapBenchmark();
+        HeapIncrementDepthBenchmark();
     }
 
     public static void HeapBenchmark() {
@@ -14,7 +14,7 @@ public class App {
 
         int randomArrayLength[] = { 64, 128, 256, 512, 1024, 2048 };
 
-        int incrementTimes=1000;
+        int incrementTimes = 1000;
         int randomIncrementValue[] = new int[incrementTimes];
 
         for (int f : randomArrayLength) {
@@ -34,12 +34,12 @@ public class App {
 
                 for (int i = 0; i < f; i++) {
                     randomStartingValue[i] = rnd.nextInt(10000);
-                    
+
                 }
-                for(int i =0;i<incrementTimes;i++)
-                {randomIncrementValue[i] = rnd.nextInt(10, 100);
-}
-                
+                for (int i = 0; i < incrementTimes; i++) {
+                    randomIncrementValue[i] = rnd.nextInt(10, 100);
+                }
+
                 Long t0 = System.nanoTime();
 
                 for (int i = 0; i < f; i++) {
@@ -112,7 +112,7 @@ public class App {
 
             }
 
-            System.out.println("Size :"+ f);
+            System.out.println("Size :" + f);
 
             System.out.println("Enqueue and Increment : " + (minimumIncrement) + " ns");
 
