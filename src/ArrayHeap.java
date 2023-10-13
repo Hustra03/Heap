@@ -36,9 +36,7 @@ public class ArrayHeap {
             }
         }
 
-            currentMaxIndex += 1;
-
-        
+        currentMaxIndex += 1;
 
     }
 
@@ -50,7 +48,7 @@ public class ArrayHeap {
             return returnValue;
         }
         heap[0] = heap[currentMaxIndex - 1];
-        sinkElement(0,0);
+        sinkElement(0, 0);
         currentMaxIndex -= 1;
 
         return returnValue;
@@ -58,7 +56,7 @@ public class ArrayHeap {
 
     public int increment(int incrementAmount) {
         heap[0] += incrementAmount;
-        int level = sinkElement(0,0);
+        int level = sinkElement(0, 0);
         return level;
     }
 
@@ -67,24 +65,38 @@ public class ArrayHeap {
         int nextIndexLeft = (currentIndex) * 2 + 1;
         int nextIndexRight = (currentIndex) * 2 + 2;
 
-        if (nextIndexLeft < currentMaxIndex && heap[currentIndex] > heap[nextIndexLeft]) {
-            if (heap[nextIndexLeft] <= heap[nextIndexRight]) {
-                int tempValue = heap[nextIndexLeft];
-                heap[nextIndexLeft] = heap[currentIndex];
-                heap[currentIndex] = tempValue;
-                level= sinkElement(nextIndexLeft,level+1);
+        if (nextIndexLeft < currentMaxIndex) {
+            if (heap[currentIndex] > heap[nextIndexLeft]) {
+                if (nextIndexRight >= currentMaxIndex) {
+                    level += 1;
+                    int tempValue = heap[nextIndexLeft];
+                    heap[nextIndexLeft] = heap[currentIndex];
+                    heap[currentIndex] = tempValue;
+                    level = sinkElement(nextIndexLeft, level);
+                } else {
+                    if (heap[nextIndexLeft] <= heap[nextIndexRight]) {
+                        level += 1;
+                        int tempValue = heap[nextIndexLeft];
+                        heap[nextIndexLeft] = heap[currentIndex];
+                        heap[currentIndex] = tempValue;
+                        level = sinkElement(nextIndexLeft, level);
+                    }
+                }
+
             }
         }
+        if (nextIndexRight < currentMaxIndex) {
+            if (heap[currentIndex] > heap[nextIndexRight]) {
 
-        if (nextIndexRight < currentMaxIndex && heap[currentIndex] > heap[nextIndexRight]) {
-            
+                level += 1;
                 int tempValue = heap[nextIndexRight];
                 heap[nextIndexRight] = heap[currentIndex];
                 heap[currentIndex] = tempValue;
-                level = sinkElement(nextIndexRight,level+1);
-            
+                level = sinkElement(nextIndexRight, level);
+            }
 
         }
+
         return level;
 
     }

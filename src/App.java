@@ -4,132 +4,147 @@ public class App {
     public static void main(String[] args) throws Exception {
         // TreeHeapTest();
         // ArrayHeapTest();
-        //HeapBenchmark();
-        //HeapIncrementDepthBenchmark();
+        HeapBenchmark();
+        // HeapIncrementDepthBenchmark();
     }
 
     public static void HeapBenchmark() {
 
         Random rnd = new Random();
 
-        Long minimumIncrement = Long.MAX_VALUE;
+        int randomArrayLength[] = { 64, 128, 256, 512, 1024, 2048 };
 
-        Long minimumDequeue = Long.MAX_VALUE;
+        int incrementTimes=1000;
+        int randomIncrementValue[] = new int[incrementTimes];
 
-        Long minimumArrayDequeue = Long.MAX_VALUE;
-        Long minimumArrayIncrement = Long.MAX_VALUE;
+        for (int f : randomArrayLength) {
 
-        int randomArrayLength = 1023;
+            Long minimumIncrement = Long.MAX_VALUE;
+            Long minimumDequeue = Long.MAX_VALUE;
 
-        int randomStartingValue[] = new int[randomArrayLength];
-        int randomIncrementValue[] = new int[randomArrayLength];
+            Long minimumArrayDequeue = Long.MAX_VALUE;
+            Long minimumArrayIncrement = Long.MAX_VALUE;
 
-        for (int h = 0; h < 100; h++) {
+            int randomStartingValue[] = new int[f];
 
-            TreeHeap heap1 = new TreeHeap();
-            TreeHeap heap2 = new TreeHeap();
+            for (int h = 0; h < 250; h++) {
 
-            for (int i = 0; i < randomArrayLength; i++) {
-                randomStartingValue[i] = rnd.nextInt(10000);
-                randomIncrementValue[i] = rnd.nextInt(10, 100);
+                TreeHeap heap1 = new TreeHeap();
+                TreeHeap heap2 = new TreeHeap();
+
+                for (int i = 0; i < f; i++) {
+                    randomStartingValue[i] = rnd.nextInt(10000);
+                    
+                }
+                for(int i =0;i<incrementTimes;i++)
+                {randomIncrementValue[i] = rnd.nextInt(10, 100);
+}
+                
+                Long t0 = System.nanoTime();
+
+                for (int i = 0; i < f; i++) {
+                    int randomInt = randomStartingValue[i];
+                    heap1.enqueue(randomInt);
+                }
+                for (int i = 0; i < incrementTimes; i++) {
+                    int randomInt = randomIncrementValue[i];
+                    heap1.increment(randomInt);
+                }
+
+                Long t1 = System.nanoTime() - t0;
+                if (minimumIncrement > (t1)) {
+                    minimumIncrement = (t1);
+                }
+
+                t0 = System.nanoTime();
+                for (int i = 0; i < f; i++) {
+                    int randomInt = randomStartingValue[i];
+                    heap2.enqueue(randomInt);
+
+                }
+                for (int i = 0; i < incrementTimes; i++) {
+                    int randomInt = randomIncrementValue[i];
+                    int dequeuedInt = heap2.dequeue();
+                    heap2.enqueue(dequeuedInt + randomInt);
+                }
+                t1 = System.nanoTime() - t0;
+
+                if (minimumDequeue > (t1)) {
+                    minimumDequeue = (t1);
+                }
+
+                ArrayHeap heap3 = new ArrayHeap(f);
+
+                ArrayHeap heap4 = new ArrayHeap(f);
+
+                t0 = System.nanoTime();
+                for (int i = 0; i < f; i++) {
+                    int randomInt = randomStartingValue[i];
+                    heap3.bubble(randomInt);
+
+                }
+                for (int i = 0; i < incrementTimes; i++) {
+                    int randomInt = randomIncrementValue[i];
+                    int dequeuedInt = heap3.sink();
+                    heap3.bubble(dequeuedInt + randomInt);
+                }
+                t1 = System.nanoTime() - t0;
+
+                if (minimumArrayDequeue > (t1)) {
+                    minimumArrayDequeue = (t1);
+                }
+
+                t0 = System.nanoTime();
+                for (int i = 0; i < f; i++) {
+                    int randomInt = randomStartingValue[i];
+                    heap4.bubble(randomInt);
+
+                }
+                for (int i = 0; i < incrementTimes; i++) {
+                    int randomInt = randomIncrementValue[i];
+                    heap4.increment(randomInt);
+                }
+                t1 = System.nanoTime() - t0;
+
+                if (minimumArrayIncrement > (t1)) {
+                    minimumArrayIncrement = (t1);
+                }
+
             }
 
-            Long t0 = System.nanoTime();
+            System.out.println("Size :"+ f);
 
-            for (int i = 0; i < randomArrayLength; i++) {
-                int randomInt = randomStartingValue[i];
-                heap1.enqueue(randomInt);
+            System.out.println("Enqueue and Increment : " + (minimumIncrement) + " ns");
 
-            }
-            for (int i = 0; i < randomArrayLength; i++) {
-                int randomInt = randomIncrementValue[i];
-                heap1.increment(randomInt);
-            }
+            System.out.println("Enqueue and Dequeue   : " + (minimumDequeue) + " ns");
 
-            Long t1 = System.nanoTime() - t0;
-            if (minimumIncrement > (t1)) {
-                minimumIncrement = (t1);
-            }
+            System.out.println("Bubble and Dequeue    : " + (minimumArrayIncrement) + " ns");
 
-            t0 = System.nanoTime();
-            for (int i = 0; i < randomArrayLength; i++) {
-                int randomInt = randomStartingValue[i];
-                heap2.enqueue(randomInt);
+            System.out.println("Bubble and Increment  : " + (minimumArrayDequeue) + " ns");
 
-            }
-            for (int i = 0; i < randomArrayLength; i++) {
-                int randomInt = randomIncrementValue[i];
-                int dequeuedInt = heap2.dequeue();
-                heap2.enqueue(dequeuedInt + randomInt);
-            }
-            t1 = System.nanoTime() - t0;
-
-            if (minimumDequeue > (t1)) {
-                minimumDequeue = (t1);
-            }
-
-            ArrayHeap heap3 = new ArrayHeap(randomArrayLength);
-
-            ArrayHeap heap4 = new ArrayHeap(randomArrayLength);
-
-            t0 = System.nanoTime();
-            for (int i = 0; i < 1023; i++) {
-                int randomInt = randomStartingValue[i];
-                heap3.bubble(randomInt);
-
-            }
-            for (int i = 0; i < 1023; i++) {
-                int randomInt = randomIncrementValue[i];
-                int dequeuedInt = heap3.sink();
-                heap3.bubble(dequeuedInt + randomInt);
-            }
-            t1 = System.nanoTime() - t0;
-
-            if (minimumArrayDequeue > (t1)) {
-                minimumArrayDequeue = (t1);
-            }
-
-            t0 = System.nanoTime();
-            for (int i = 0; i < 1023; i++) {
-                int randomInt = randomStartingValue[i];
-                heap4.bubble(randomInt);
-
-            }
-            for (int i = 0; i < 1023; i++) {
-                int randomInt = randomIncrementValue[i];
-                heap4.increment(randomInt);
-            }
-            t1 = System.nanoTime() - t0;
-
-            if (minimumArrayIncrement > (t1)) {
-                minimumArrayIncrement = (t1);
-            }
-
+            System.out.println("_________________________");
         }
-
-        System.out.println("Enqueue and Increment :" + (minimumIncrement) + " ns");
-
-        System.out.println("Enqueue and Dequeue   :" + (minimumDequeue) + " ns");
-
-        System.out.println("Bubble and Dequeue    :" + (minimumArrayIncrement) + " ns");
-
-        System.out.println("Bubble and Increment  :" + (minimumArrayDequeue) + " ns");
     }
 
     public static void HeapIncrementDepthBenchmark() {
         Random rnd = new Random();
         int randomArrayLength = 1023;
+        int incrementTimes = 5000;
+
         TreeHeap heap1 = new TreeHeap();
         ArrayHeap heap4 = new ArrayHeap(randomArrayLength);
 
         int randomStartingValue[] = new int[randomArrayLength];
-        int randomIncrementValue[] = new int[randomArrayLength];
+        int randomIncrementValue[] = new int[incrementTimes];
 
-        int binaryTreeDepth[]=new int[randomArrayLength];
-        int arrayDepth[]=new int[randomArrayLength];
+        int binaryTreeDepth[] = new int[incrementTimes];
+        int arrayDepth[] = new int[incrementTimes];
 
         for (int i = 0; i < randomArrayLength; i++) {
             randomStartingValue[i] = rnd.nextInt(10000);
+        }
+
+        for (int i = 0; i < incrementTimes; i++) {
             randomIncrementValue[i] = rnd.nextInt(10, 100);
         }
 
@@ -138,24 +153,24 @@ public class App {
             heap1.enqueue(randomInt);
 
         }
-        for (int i = 0; i < randomArrayLength; i++) {
+        for (int i = 0; i < incrementTimes; i++) {
             int randomInt = randomIncrementValue[i];
-            binaryTreeDepth[i]=heap1.increment(randomInt);
+            binaryTreeDepth[i] = heap1.increment(randomInt);
         }
 
-        for (int i = 0; i < 1023; i++) {
+        for (int i = 0; i < randomArrayLength; i++) {
             int randomInt = randomStartingValue[i];
             heap4.bubble(randomInt);
 
         }
-        for (int i = 0; i < 1023; i++) {
+        for (int i = 0; i < incrementTimes; i++) {
             int randomInt = randomIncrementValue[i];
-            arrayDepth[i]=heap4.increment(randomInt);
+            arrayDepth[i] = heap4.increment(randomInt);
         }
 
         System.out.print("Linked List : {");
-        for (int i = 0; i < arrayDepth.length; i++) {
-            System.out.print(binaryTreeDepth[i]+", ");
+        for (int i = 0; i < binaryTreeDepth.length; i++) {
+            System.out.print(binaryTreeDepth[i] + ", ");
         }
 
         System.out.print("}");
@@ -163,7 +178,7 @@ public class App {
 
         System.out.print("Array : {");
         for (int i = 0; i < arrayDepth.length; i++) {
-            System.out.print(arrayDepth[i]+", ");
+            System.out.print(arrayDepth[i] + ", ");
         }
 
         System.out.print("}");
