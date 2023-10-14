@@ -73,16 +73,18 @@ public class ArrayHeap {
                     heap[nextIndexLeft] = heap[currentIndex];
                     heap[currentIndex] = tempValue;
                     level = sinkElement(nextIndexLeft, level);
-                } else {
-                    if (heap[nextIndexLeft] <= heap[nextIndexRight]) {
-                        level += 1;
-                        int tempValue = heap[nextIndexLeft];
-                        heap[nextIndexLeft] = heap[currentIndex];
-                        heap[currentIndex] = tempValue;
-                        level = sinkElement(nextIndexLeft, level);
+                } 
+                else
+                {
+                    if (heap[nextIndexRight] >= heap[nextIndexLeft]) {
+                        
+                    level += 1;
+                    int tempValue = heap[nextIndexLeft];
+                    heap[nextIndexLeft] = heap[currentIndex];
+                    heap[currentIndex] = tempValue;
+                    level = sinkElement(nextIndexLeft, level);
                     }
                 }
-
             }
         }
         if (nextIndexRight < currentMaxIndex) {
@@ -96,8 +98,6 @@ public class ArrayHeap {
             }
 
         }
-
         return level;
-
     }
 }
